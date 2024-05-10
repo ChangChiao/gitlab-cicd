@@ -1,7 +1,28 @@
+image: node:20
+
 stages:
   - hello
+  - build
 
-hello:
-  stage: hello
+main:
+  interruptible: true
+  only:
+    - main
+    - merge_requests
+  cache:
+    key:
+      files:
+        - pnpm-lock.yaml
+    paths:
+      - .npm/
+
+build:
+  stage: build
   script:
-    - echo "Hello, World!"
+    - echo "Building the app..."
+    - pnpm install
+    - pnpm build
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 days
