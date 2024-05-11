@@ -1,20 +1,24 @@
 image: node:20
 
 stages:
-  - hello
+  - install
   - build
 
-main:
+install:
+  stage: install
   interruptible: true
   only:
     - main
     - merge_requests
+  script:
+    - echo "Installing dependencies..."
+    - pnpm install
   cache:
     key:
       files:
         - pnpm-lock.yaml
     paths:
-      - .npm/
+      - node_modules/
 
 build:
   stage: build
