@@ -7,9 +7,9 @@ stages:
 install:
   stage: install
   interruptible: true
-  only:
-    - main
-    - merge_requests
+  # only:
+  #   - main
+  #   - merge_requests
   script:
     - echo "Installing dependencies..."
     - pnpm install
