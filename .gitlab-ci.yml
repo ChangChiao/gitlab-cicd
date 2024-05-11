@@ -1,32 +1,27 @@
-image: node:20
+image: 'public.ecr.aws/docker/library/node:18-bullseye'
 
 stages:
-  - install
   - build
+  - deploy
 
-install:
-  stage: install
-  interruptible: true
-  # only:
-  #   - main
-  #   - merge_requests
-  script:
-    - echo "Installing dependencies..."
-    - pnpm install
-  cache:
-    key:
-      files:
-        - pnpm-lock.yaml
-    paths:
-      - node_modules/
+cache:
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - .pnpm-store
+  policy: pull-push
+
+before_script:
+  - corepack enable
+  - corepack prepare --activate
+  - pnpm config set store-dir .pnpm-store
+  - pnpm config set @scope:registry https://${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/
+  - pnpm config set -- //${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken ${CI_JOB_TOKEN}
+  - pnpm install
 
 build:
   stage: build
   script:
-    - echo "Building the app..."
-    - pnpm install
-    - pnpm build
+    - pnpm run build
   artifacts:
     paths:
       - dist/
-    expire_in: 1 days
