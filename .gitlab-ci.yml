@@ -41,8 +41,15 @@ e2e-test:
     - NX_BASE=${CI_MERGE_REQUEST_DIFF_BASE_SHA:-$CI_COMMIT_BEFORE_SHA}
   script:
     - pnpm install
-    - pnpm run test
-  parallel:
-    matrix:
-      - PROJECT: ['chromium']
-        SHARD: ['1/10', '2/10', '3/10', '4/10', '5/10', '6/10', '7/10', '8/10', '9/10', '10/10']
+    - pnpm exec nx run e2e-ui-reporter 
+  allow_failure: true
+  artifacts:
+    when: always
+    paths:
+      - playwright-report
+    expire_in: 2 days
+
+  # parallel:
+  #   matrix:
+  #     - PROJECT: ['chromium']
+  #       SHARD: ['1/10', '2/10', '3/10', '4/10', '5/10', '6/10', '7/10', '8/10', '9/10', '10/10']

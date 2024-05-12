@@ -74,6 +74,12 @@
       "options": {
         "jestConfig": "jest.config.ts"
       }
+    },
+    "e2e-ui-reporter": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["nx e2e bess-web --reporter=html"]
+      }
     }
   }
 }
