@@ -1,4 +1,4 @@
-
+image: 'public.ecr.aws/docker/library/node:18-bullseye'
 
 stages:
   - build
@@ -16,7 +16,6 @@ stages:
 
 build:
   stage: build
-  image: 'public.ecr.aws/docker/library/node:18-bullseye'
   before_script:
     - corepack enable
     - corepack prepare --activate
