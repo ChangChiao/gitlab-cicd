@@ -2,7 +2,7 @@
 
 stages:
   - build
-  - e2e-test
+  - test
   # - deploy
 
 # default:
