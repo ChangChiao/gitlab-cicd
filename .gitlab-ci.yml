@@ -33,10 +33,16 @@ build:
 e2e-test:
   stage: test
   # image: mcr.microsoft.com/playwright:v1.44.0-jammy
+  before_script:
+    - corepack enable
+    - corepack prepare --activate
+    - pnpm config set store-dir .pnpm-store
+    - NX_HEAD=$CI_COMMIT_SHA
+    - NX_BASE=${CI_MERGE_REQUEST_DIFF_BASE_SHA:-$CI_COMMIT_BEFORE_SHA}
+  script:
+    - pnpm install
+    - pnpm run e2e
   parallel:
     matrix:
       - PROJECT: ['chromium']
         SHARD: ['1/10', '2/10', '3/10', '4/10', '5/10', '6/10', '7/10', '8/10', '9/10', '10/10']
-  script:
-    - pnpm install
-    - pnpm run e2e
