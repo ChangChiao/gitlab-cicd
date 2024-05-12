@@ -1,7 +1,8 @@
-image: 'public.ecr.aws/docker/library/node:18-bullseye'
+
 
 stages:
   - build
+  - e2e-test
   # - deploy
 
 # default:
@@ -15,6 +16,7 @@ stages:
 
 build:
   stage: build
+  image: 'public.ecr.aws/docker/library/node:18-bullseye'
   before_script:
     - corepack enable
     - corepack prepare --activate
@@ -27,3 +29,15 @@ build:
   artifacts:
     paths:
       - dist/
+
+  
+e2e-test:
+  stage: test
+  image: mcr.microsoft.com/playwright:v1.44.0-jammy
+  parallel:
+    matrix:
+      - PROJECT: ['chromium']
+        SHARD: ['1/10', '2/10', '3/10', '4/10', '5/10', '6/10', '7/10', '8/10', '9/10', '10/10']
+  script:
+    - pnpm install
+    - pnpm run e2e
