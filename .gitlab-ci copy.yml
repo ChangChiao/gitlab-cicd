@@ -1,0 +1,32 @@
+image: node:20
+
+stages:
+  - install
+  - build
+
+install:
+  stage: install
+  interruptible: true
+  # only:
+  #   - main
+  #   - merge_requests
+  script:
+    - echo "Installing dependencies..."
+    - pnpm install
+  cache:
+    key:
+      files:
+        - pnpm-lock.yaml
+    paths:
+      - node_modules/
+
+build:
+  stage: build
+  script:
+    - echo "Building the app..."
+    - pnpm install
+    - pnpm build
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 days
