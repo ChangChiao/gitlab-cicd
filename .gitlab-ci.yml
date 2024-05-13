@@ -16,6 +16,8 @@ stages:
 
 build:
   stage: build
+  only:
+    - merge_requests
   before_script:
     - corepack enable
     - corepack prepare --activate
@@ -33,6 +35,8 @@ build:
 e2e-test:
   stage: test
   # image: mcr.microsoft.com/playwright:v1.44.0-jammy
+  only:
+    - merge_requests
   before_script:
     - corepack enable
     - corepack prepare --activate
