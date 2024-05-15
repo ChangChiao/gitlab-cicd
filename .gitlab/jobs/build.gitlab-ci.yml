@@ -1,0 +1,16 @@
+build:
+  stage: build
+  only:
+    - merge_requests
+  before_script:
+    - corepack enable
+    - corepack prepare --activate
+    - pnpm config set store-dir .pnpm-store
+    - NX_HEAD=$CI_COMMIT_SHA
+    - NX_BASE=${CI_MERGE_REQUEST_DIFF_BASE_SHA:-$CI_COMMIT_BEFORE_SHA}
+  script:
+    - pnpm install
+    - pnpm run build
+  artifacts:
+    paths:
+      - dist/
