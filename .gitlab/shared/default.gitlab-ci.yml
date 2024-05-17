@@ -6,3 +6,4 @@ default:
         - pnpm-lock.yaml
     paths:
       - .pnpm-store
+      - node_modules/
