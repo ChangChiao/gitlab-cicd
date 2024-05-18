@@ -29,6 +29,9 @@ dependencies:
   '@angular/router':
     specifier: ~17.3.0
     version: 17.3.8(@angular/common@17.3.8)(@angular/core@17.3.8)(@angular/platform-browser@17.3.8)(rxjs@7.8.1)
+  '@esbuild/darwin-arm64':
+    specifier: ^0.21.3
+    version: 0.21.3
   '@nrwl/nx-linux-arm64-gnu':
     specifier: ^15.9.3
     version: 15.9.3
@@ -2810,6 +2813,13 @@ packages:
     os: [darwin]
     requiresBuild: true
     optional: true
+
+  /@esbuild/darwin-arm64@0.21.3:
+    resolution: {integrity: sha512-U3fuQ0xNiAkXOmQ6w5dKpEvXQRSpHOnbw7gEfHCRXPeTKW9sBzVck6C5Yneb8LfJm0l6le4NQfkNPnWMSlTFUQ==}
+    engines: {node: '>=12'}
+    cpu: [arm64]
+    os: [darwin]
+    dev: false
 
   /@esbuild/darwin-x64@0.19.12:
     resolution: {integrity: sha512-hKoVkKzFiToTgn+41qGhsUJXFlIjxI/jSYeZf3ugemDYZldIXIxhvwN6erJGlX4t5h417iFuheZ7l+YVn05N3A==}
