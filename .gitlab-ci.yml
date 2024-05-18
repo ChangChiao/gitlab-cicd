@@ -3,6 +3,23 @@ stages:
   - test
   # - deploy
 
+variables:
+  BRANCH: $CI_COMMIT_BRANCH
+  SOURCE: $CI_PIPELINE_SOURCE
+
+# workflow:
+#   rules:
+#     - if: $CI_COMMIT_BRANCH == "main"
+#       when: always
+#     - if: $CI_COMMIT_BRANCH == "develop"
+#       when: always
+#     - if: $CI_COMMIT_BRANCH == "feature/*"
+#       when: always
+#     - if: $CI_COMMIT_BRANCH == "hotfix/*"
+#       when: always
+#     - if: $CI_COMMIT_BRANCH == "release/*"
+#       when: always
+#     - when: never
 
 include:
   - local: '.gitlab/shared/default.gitlab-ci.yml'
