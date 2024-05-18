@@ -3,6 +3,7 @@ build:
   only:
     - merge_requests
   before_script:
+    - echo $SOURCE
     - corepack enable
     - corepack prepare --activate
     - pnpm config set store-dir .pnpm-store
