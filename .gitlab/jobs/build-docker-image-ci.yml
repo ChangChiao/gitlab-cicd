@@ -1,0 +1,7 @@
+build-docker-image:
+  stage: build
+  needs:
+    - build
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE:1.0 .
+  allow_failure: true
