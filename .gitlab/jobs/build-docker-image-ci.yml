@@ -5,3 +5,16 @@ build-docker-image:
   script:
     - docker build -t $CI_REGISTRY_IMAGE:1.0 .
   allow_failure: true
+
+push-to-registry:
+  stage: publish
+  tags:
+    - shell
+  needs:
+    - build-docker-image
+  before_script:
+    - export IMAGE_VERSION=$(cat deno.json | jq -r .version)
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker push $CI_REGISTRY_IMAGE:$IMAGE_VERSION-build$CI_PIPELINE_IID
+    - docker push $CI_REGISTRY_IMAGE:latest
