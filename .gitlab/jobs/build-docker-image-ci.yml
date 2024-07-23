@@ -1,10 +1,16 @@
 build-docker-image:
   stage: build
-  needs:
-    - build
+  tags:
+    - shell
+  # needs:
+  #   - run-tests
+  before_script:
+    - export IMAGE_VERSION=$(cat deno.json | jq -r .version)
   script:
-    - docker build -t $CI_REGISTRY_IMAGE:1.0 .
-  allow_failure: true
+    - docker build -t $CI_REGISTRY_IMAGE:$IMAGE_VERSION-build$CI_PIPELINE_IID .
+    - docker tag $CI_REGISTRY_IMAGE:$IMAGE_VERSION-build$CI_PIPELINE_IID $CI_REGISTRY_IMAGE:latest
+    - docker images
+
 
 push-to-registry:
   stage: publish
