@@ -1,7 +1,15 @@
 deploy-to-dev:
-  stage: deploy
+  stage: deploy_to_dev
   before_script:
     - eval $(ssh-agent -s)
     - ssh-add <(echo "$SSH_PRIVATE_KEY")
   script:
+    - scp -o StrictHostKeyChecking=no ./docker-compose.yml $DEPLOY_USER@$DEPLOY_HOST:/root
     - ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST "
+      export APP_PORT=8000
+      export COMPOSE_PROJECT_NAME=staging
+      docker-compose down && 
+      docker-compose up -d"
+  environment:
+    name: dev
+    url: http://$DEPLOY_HOST:$APP_PORT
