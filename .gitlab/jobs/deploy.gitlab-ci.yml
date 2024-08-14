@@ -1,4 +1,8 @@
+.common_setup:
+  script:
+    - echo "Common setup"
 deploy-to-dev:
+  extends: .common_setup
   stage: deploy_to_dev
   before_script:
     - eval $(ssh-agent -s)
